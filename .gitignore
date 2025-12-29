@@ -44,5 +44,6 @@ $RECYCLE.BIN/
 
 # Manually add
 .env
+*.json
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,venv
