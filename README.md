@@ -6,6 +6,13 @@ Technical challenge for application for data engineer position at GLOBANT
 - FastAPI
 - PostgreSQL (Cloud SQL)
 
+## Database Architecture
+
+The project uses two database models:
+
+- **OLTP**: normalized schema for transactional data ingestion.
+- **OLAP**: star schema optimized for analytical queries and reporting.
+
 ## Features
 - CSV batch ingestion
 - REST API batch insert
