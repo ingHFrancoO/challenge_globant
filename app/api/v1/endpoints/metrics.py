@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.db.session import get_db
+from app.core.security import verify_token
 from app.schemas.transactions import TableBatch
 from app.services.metrics_service import hired_employees_by_quarter, departments_above_mean_hiring
 from app.models.schemas.metrics import HiredEmployeesQuarterlyOut, DepartmentHiringOut
@@ -13,6 +14,7 @@ router = APIRouter()
 
 @router.get(
         "/hired-employees/quarterly/{year}", 
+        dependencies=[Depends(verify_token)],
         response_model=List[HiredEmployeesQuarterlyOut],
         summary="Employees hired per quarter",
         )

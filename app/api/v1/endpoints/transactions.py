@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 
+from app.core.security import verify_token
 from app.db.session import get_db
 from app.schemas.transactions import TableBatch
 from app.services.transactions_service import save_rows_in_table
@@ -12,7 +13,8 @@ import pandas as pd
 router = APIRouter()
 
 @router.post(
-        "/add_records/batch", 
+        "/add_records/batch",
+        dependencies=[Depends(verify_token)],
         # response_model=list[ColorOut]
         )
 def add_records(transactions: List[TableBatch],  db: Session = Depends(get_db)):
