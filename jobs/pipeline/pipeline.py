@@ -29,13 +29,13 @@ def pipeline():
         df = read_csv_from_gcs(blob_name)
         df = apply_schema(df, table_name)
         df = normalize_df(df, table_name)
-        # load_dataframe_to_postgres(
-        #     df,
-        #     table_name,
-        #     engine
-        # )
+        load_dataframe_to_postgres(
+            df,
+            table_name,
+            engine
+        )
         
-        # move_to_processed(blob_name)
+        move_to_processed(blob_name)
 
         avro_file = backup_table_to_avro(df, table_name)
         upload_file_to_gcs(avro_file)
