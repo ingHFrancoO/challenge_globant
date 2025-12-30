@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from urllib.parse import quote_plus
 import os
 
 
@@ -7,7 +8,7 @@ def get_postgres_engine():
     Create PostgreSQL SQLAlchemy engine using environment variables.
     """
     user = os.getenv("PG_USER")
-    password = os.getenv("PG_PASSWORD")
+    password = quote_plus(os.getenv("PG_PASSWORD"))
     host = os.getenv("PG_HOST")
     port = os.getenv("PG_PORT", "5432")
     db = os.getenv("PG_DB")
