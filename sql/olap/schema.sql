@@ -14,12 +14,12 @@ CREATE TABLE "dim_date" (
   "month" int NOT NULL
 );
 
-CREATE TABLE "dim_department" (
+CREATE TABLE "dim_departments" (
   "department_id" int PRIMARY KEY,
   "department_name" varchar NOT NULL
 );
 
-CREATE TABLE "dim_job" (
+CREATE TABLE "dim_jobs" (
   "job_id" int PRIMARY KEY,
   "job_name" varchar NOT NULL
 );

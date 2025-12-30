@@ -63,13 +63,14 @@ def move_to_processed(blob_name: str):
 
 def upload_file_to_gcs(
     local_path: Path,
+    remote_path_profix: str = BACKUP_PREFIX
 ) -> None:
     """
     Uploads a local file to Google Cloud Storage.
     """
     bucket = client.bucket(GCS_BUCKET_NAME)
-    # Construimos el path en GCS: BACKUP_PREFIX + filename
-    destination_path = f"{BACKUP_PREFIX}/{local_path.name}"
+    # Construimos el path en GCS: remote_path_profix + filename
+    destination_path = f"{remote_path_profix}/{local_path.name}"
 
     blob = bucket.blob(destination_path)
     blob.upload_from_filename(local_path)
