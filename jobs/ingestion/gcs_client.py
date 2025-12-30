@@ -1,8 +1,11 @@
-from google.cloud import storage
 from datetime import datetime
+from google.cloud import storage
+from pathlib import Path
 import io
 import pandas as pd
-from config.config import GCS_BUCKET_NAME, PROCESSED_PREFIX
+
+from config.config import GCS_BUCKET_NAME, PROCESSED_PREFIX, BACKUP_PREFIX
+
 client = storage.Client()
 
 def list_gcs_files( prefix: str | None = None) -> list[str]:
@@ -25,6 +28,9 @@ def list_gcs_files( prefix: str | None = None) -> list[str]:
     ]
 
 def read_csv_from_gcs(blob_name: str) -> pd.DataFrame:
+    """
+    Reed CSV from Storage.
+    """
     bucket = client.bucket(GCS_BUCKET_NAME)
     blob = bucket.blob(blob_name)
 
@@ -35,6 +41,9 @@ def read_csv_from_gcs(blob_name: str) -> pd.DataFrame:
         )
 
 def move_to_processed(blob_name: str):
+    """
+    Move filo from inbound folter to processed folder.
+    """
     bucket = client.bucket(GCS_BUCKET_NAME)
 
     source_blob = bucket.blob(blob_name)
@@ -51,3 +60,16 @@ def move_to_processed(blob_name: str):
     )
 
     source_blob.delete()
+
+def upload_file_to_gcs(
+    local_path: Path,
+) -> None:
+    """
+    Uploads a local file to Google Cloud Storage.
+    """
+    bucket = client.bucket(GCS_BUCKET_NAME)
+    # Construimos el path en GCS: BACKUP_PREFIX + filename
+    destination_path = f"{BACKUP_PREFIX}/{local_path.name}"
+
+    blob = bucket.blob(destination_path)
+    blob.upload_from_filename(local_path)
