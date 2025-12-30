@@ -2,7 +2,7 @@ from google.cloud import storage
 from datetime import datetime
 import io
 import pandas as pd
-from config.config import GCS_BUCKET_NAME
+from config.config import GCS_BUCKET_NAME, PROCESSED_PREFIX
 client = storage.Client()
 
 def list_gcs_files( prefix: str | None = None) -> list[str]:
@@ -42,7 +42,7 @@ def move_to_processed(blob_name: str):
     filename = blob_name.split("/")[-1]
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 
-    destination_blob_name = f"processed/{timestamp}_{filename}"
+    destination_blob_name = f"{PROCESSED_PREFIX}/{timestamp}_{filename}"
 
     bucket.copy_blob(
         source_blob,

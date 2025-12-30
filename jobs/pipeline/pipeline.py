@@ -22,7 +22,7 @@
 
 #     print("Archivo movido a processed/")
 from config.db_config import get_postgres_engine
-from ingestion.gcs_client import list_gcs_files, read_csv_from_gcs
+from ingestion.gcs_client import list_gcs_files, read_csv_from_gcs, move_to_processed
 from pipeline.validators import validate_required_files
 from persistence.oltp_database import load_dataframe_to_postgres
 from processing.transformations import apply_schema, normalize_df
@@ -55,3 +55,5 @@ def pipeline():
             table_name,
             engine
         )
+        
+        move_to_processed(blob_name)
