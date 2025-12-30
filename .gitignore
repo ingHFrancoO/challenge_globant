@@ -45,5 +45,6 @@ $RECYCLE.BIN/
 # Manually add
 .env
 *.json
+__pycache__
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,venv

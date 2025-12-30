@@ -29,7 +29,10 @@ def read_csv_from_gcs(blob_name: str) -> pd.DataFrame:
     blob = bucket.blob(blob_name)
 
     content = blob.download_as_bytes()
-    return pd.read_csv(io.BytesIO(content))
+    return pd.read_csv(
+        io.BytesIO(content),
+        header=None
+        )
 
 def move_to_processed(blob_name: str):
     bucket = client.bucket(GCS_BUCKET_NAME)
