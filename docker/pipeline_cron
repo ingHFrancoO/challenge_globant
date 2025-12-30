@@ -1,0 +1,2 @@
+# At minute 0 past hour 9 and 13 on every day-of-week from Monday through Saturday.
+0 9,13 * * MON-SAT  root python /app/pipeline/job/main.py >> /app/logs/pipeline.log 2>&1
