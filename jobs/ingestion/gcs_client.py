@@ -73,3 +73,23 @@ def upload_file_to_gcs(
 
     blob = bucket.blob(destination_path)
     blob.upload_from_filename(local_path)
+
+def download_file_from_gcs(bucket_name: str, gcs_path: str, local_path: Path) -> None:
+    """
+    Downloads a file from GCS to local filesystem.
+
+    Args:
+        bucket_name: Name of the GCS bucket
+        gcs_path: Path to the file in GCS
+        local_path: Path to save the file locally
+    """
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(gcs_path)
+    
+    if not blob.exists():
+        print(f"File {gcs_path} does not exist in bucket {bucket_name}")
+        return False
+
+    local_path.parent.mkdir(parents=True, exist_ok=True)
+    blob.download_to_filename(local_path)
+    print(f"Downloaded {gcs_path} to {local_path}")

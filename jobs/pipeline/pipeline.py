@@ -1,3 +1,4 @@
+import os
 from config.db_config import get_postgres_engine
 from ingestion.gcs_client import list_gcs_files, read_csv_from_gcs, move_to_processed, upload_file_to_gcs
 from pipeline.validators import validate_required_files
@@ -38,3 +39,4 @@ def pipeline():
 
         avro_file = backup_table_to_avro(df, table_name)
         upload_file_to_gcs(avro_file)
+        os.remove(avro_file)
